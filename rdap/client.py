@@ -1,4 +1,4 @@
-from __future__ import (absolute_import, division, print_function)
+from __future__ import absolute_import, division, print_function
 from builtins import object, str
 import re
 
@@ -83,22 +83,26 @@ class RdapClient(object):
         elif isinstance(config, Config):
             config = config.get("rdap")
 
-        self.url = config.get("bootstrap_url", "https://rdap.db.ripe.net/").rstrip('/')
+        self.url = config.get("bootstrap_url", "https://rdap.db.ripe.net/").rstrip("/")
 
         # use setter
         self._recurse_roles = None
-        self.recurse_roles = set(config.get("recurse_roles", ["administrative", "technical"]))
+        self.recurse_roles = set(
+            config.get("recurse_roles", ["administrative", "technical"])
+        )
 
         self._asn_req = None
         self._history = []
         self.timeout = config.get("timeout", 0.5)
 
         self.http = requests.Session()
-        self.http.auth = RdapRequestAuth(**dict(
-            lacnic_apikey=config.get("lacnic_apikey", None),
-            ))
+        self.http.auth = RdapRequestAuth(
+            **dict(lacnic_apikey=config.get("lacnic_apikey", None),)
+        )
 
-        self.http.headers["User-Agent"] = "20C-rdap/{} {}".format(rdap.__version__, self.http.headers["User-Agent"])
+        self.http.headers["User-Agent"] = "20C-rdap/{} {}".format(
+            rdap.__version__, self.http.headers["User-Agent"]
+        )
 
     def _get(self, url):
         res = self.http.get(url, timeout=self.timeout)
@@ -109,7 +113,9 @@ class RdapClient(object):
         if res.status_code == 200:
             return res
 
-        msg = "RDAP lookup to {} returned {}".format(strip_auth(res.url), res.status_code)
+        msg = "RDAP lookup to {} returned {}".format(
+            strip_auth(res.url), res.status_code
+        )
         if res.status_code == 404:
             raise RdapNotFoundError(msg)
         raise RdapHTTPError(msg)
