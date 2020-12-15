@@ -1,0 +1,12 @@
+rdap:
+  # URL to bootstrap the initial request off
+  #bootstrap_url: https://rdap.db.ripe.net/
+  bootstrap_url: https://rms.twnic.net.tw/ip/
+  # how to format the output
+  output_format: json
+  # API key for use at rdap.lacnic.net
+  lacnic_apikey: None
+  # role types to recursively query when processing
+  recurse_roles: ["administrative", "technical"]
+  # HTTP request timeout in seconds, used for both connect and read
+  timeout: 0.5
