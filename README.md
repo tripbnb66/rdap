@@ -13,6 +13,7 @@ Registration Data Access Protocol tools
 
 ```sh
 pip install rdap
+rdap 94.234.38.5
 ```
 
 
